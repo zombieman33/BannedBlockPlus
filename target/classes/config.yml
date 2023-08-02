@@ -1,0 +1,8 @@
+addBannedBlockMessage: '&aYou added %block% to the list of banned blocks.'
+removeBannedBlockMessage: '&aYou removed %block% from the list of banned blocks.'
+
+checkBannedBlockMessageSuccess: '&a%block-name% is in the list of banned blocks.'
+checkBannedBlockMessageError: '&c%block-name% is not the list of banned blocks.'
+
+bannedBlockMessage: '&c%block% is banned.'
+bannedBlocks:

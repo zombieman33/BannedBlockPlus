@@ -1,0 +1,14 @@
+/Users/admin/IdeaProjects/BannedBlockPlus/src/main/java/me/zombieman/bannedblockplus/utils/HelpMessages.java
+/Users/admin/IdeaProjects/BannedBlockPlus/src/main/java/me/zombieman/bannedblockplus/data/PlayerData.java
+/Users/admin/IdeaProjects/BannedBlockPlus/src/main/java/me/zombieman/bannedblockplus/BannedBlockPlus.java
+/Users/admin/IdeaProjects/BannedBlockPlus/src/main/java/me/zombieman/bannedblockplus/data/BlockData.java
+/Users/admin/IdeaProjects/BannedBlockPlus/src/main/java/me/zombieman/bannedblockplus/commands/RemoveBlockCommand.java
+/Users/admin/IdeaProjects/BannedBlockPlus/src/main/java/me/zombieman/bannedblockplus/commands/ListOfBlocksCommand.java
+/Users/admin/IdeaProjects/BannedBlockPlus/src/main/java/me/zombieman/bannedblockplus/commands/CheckBlockCommand.java
+/Users/admin/IdeaProjects/BannedBlockPlus/src/main/java/me/zombieman/bannedblockplus/commands/AddBlockCommand.java
+/Users/admin/IdeaProjects/BannedBlockPlus/src/main/java/me/zombieman/bannedblockplus/listeners/BlockBreakListener.java
+/Users/admin/IdeaProjects/BannedBlockPlus/src/main/java/me/zombieman/bannedblockplus/utils/ColorUtils.java
+/Users/admin/IdeaProjects/BannedBlockPlus/src/main/java/me/zombieman/bannedblockplus/data/SaveData.java
+/Users/admin/IdeaProjects/BannedBlockPlus/src/main/java/me/zombieman/bannedblockplus/commands/ToggleBypassCommand.java
+/Users/admin/IdeaProjects/BannedBlockPlus/src/main/java/me/zombieman/bannedblockplus/listeners/BlockPlaceListener.java
+/Users/admin/IdeaProjects/BannedBlockPlus/src/main/java/me/zombieman/bannedblockplus/data/SaveBlockData.java
