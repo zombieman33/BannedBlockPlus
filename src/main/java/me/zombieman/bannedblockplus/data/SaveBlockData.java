@@ -38,7 +38,7 @@ public class SaveBlockData {
     }
     public void removeBlockData(ItemStack block, Player p) {
         String blockName = block.getType().toString();
-        String formattedName = blockName.toLowerCase().replace("_", " ");
+        String formattedName = blockName.toLowerCase().replace(" ", "_");
         if (block.getType().isBlock()) {
             List<String> blocks = plugin.getConfig().getStringList("bannedBlocks");
             if (blocks.contains(blockName)) {

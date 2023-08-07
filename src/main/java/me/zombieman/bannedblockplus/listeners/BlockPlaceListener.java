@@ -29,19 +29,17 @@ public class BlockPlaceListener implements Listener {
         Block block = e.getBlock();
         List<String> blocks = plugin.getConfig().getStringList("bannedBlocks");
         if (blocks.contains(block.getType().toString())) {
-            if (!p.hasPermission("bannedblockplus.bypass")) {
-                File playerDataFile = new File(plugin.getDataFolder(), "playerData.yml");
-                FileConfiguration playerDataConfig = YamlConfiguration.loadConfiguration(playerDataFile);
-                UUID pUUID = p.getUniqueId();
-                boolean wantsToBypass = playerDataConfig.getBoolean(pUUID + ".enabled", false);
-                if (!wantsToBypass) {
-                    if (!e.isCancelled()) {
-                        e.setCancelled(true);
-                        p.sendMessage(ColorUtils.color(plugin.getConfig().getString("bannedBlockMessage")
-                                .replace("%block%", block.getType().name())
-                                .replace("%block-name%", SaveBlockData.blockName(new ItemStack(block.getType())))
-                                .replace("%player%", p.getName())));
-                    }
+            File playerDataFile = new File(plugin.getDataFolder(), "playerData.yml");
+            FileConfiguration playerDataConfig = YamlConfiguration.loadConfiguration(playerDataFile);
+            UUID pUUID = p.getUniqueId();
+            boolean wantsToBypass = playerDataConfig.getBoolean(pUUID + ".enabled", false);
+            if (!wantsToBypass) {
+                if (!e.isCancelled()) {
+                    e.setCancelled(true);
+                    p.sendMessage(ColorUtils.color(plugin.getConfig().getString("bannedBlockMessage")
+                            .replace("%block%", block.getType().name())
+                            .replace("%block-name%", SaveBlockData.blockName(new ItemStack(block.getType())))
+                            .replace("%player%", p.getName())));
                 }
             }
         }
