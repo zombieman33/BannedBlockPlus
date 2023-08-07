@@ -17,6 +17,7 @@ public class SaveBlockData {
     public SaveBlockData(BannedBlockPlus plugin) {
         this.plugin = plugin;
     }
+
     public void saveBlockData(ItemStack block, Player p) {
         String blockName = block.getType().toString();
         if (block.getType().isBlock() && !block.getType().isAir()) {

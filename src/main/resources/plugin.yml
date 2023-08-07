@@ -18,3 +18,5 @@ commands:
   listbannedblock:
     aliases:
       - listblock
+  toggleaddbannedblock:
+    aliases: [togglebannedblocksadder, toggleaddbannedblocks]

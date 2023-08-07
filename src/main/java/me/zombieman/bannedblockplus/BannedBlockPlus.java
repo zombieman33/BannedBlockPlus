@@ -26,19 +26,28 @@ public final class BannedBlockPlus extends JavaPlugin {
             getLogger().info("PlayerData file not found, creating...");
             saveResource("playerData.yml", false);
         }
+
         // Commands
         AddBlockCommand addBlockCommand = new AddBlockCommand(this);
         PluginCommand addBlockCmd = getCommand("addbannedblock");
         if (addBlockCmd != null) addBlockCmd.setExecutor(addBlockCommand);
+
         RemoveBlockCommand removeBlockCommand = new RemoveBlockCommand(this);
         PluginCommand removeBlockCmd = getCommand("removebannedblock");
         if (removeBlockCmd != null) removeBlockCmd.setExecutor(removeBlockCommand);
+
         CheckBlockCommand checkBlockCommand = new CheckBlockCommand(this);
         PluginCommand checkBlockCmd = getCommand("checkbannedblock");
         if (checkBlockCmd != null) checkBlockCmd.setExecutor(checkBlockCommand);
+
         ToggleBypassCommand ToggleBypassCommand = new ToggleBypassCommand(this);
         PluginCommand toggleBypassCmd = getCommand("bypassbannedblock");
         if (toggleBypassCmd != null) toggleBypassCmd.setExecutor(ToggleBypassCommand);
+
+        ToggleAddBlockCommand toggleAddBlockCommand = new ToggleAddBlockCommand(this);
+        PluginCommand toggleAddBlockPlCmd = getCommand("toggleaddbannedblock");
+        if (toggleAddBlockPlCmd != null) toggleAddBlockPlCmd.setExecutor(toggleAddBlockCommand);
+
         ListOfBlocksCommand listOfBlocksCommand = new ListOfBlocksCommand(this);
         PluginCommand listOfBlockCmd = getCommand("listbannedblock");
         if (listOfBlockCmd != null) listOfBlockCmd.setExecutor(listOfBlocksCommand);
