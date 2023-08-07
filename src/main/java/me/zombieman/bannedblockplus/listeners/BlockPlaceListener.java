@@ -1,15 +1,19 @@
 package me.zombieman.bannedblockplus.listeners;
 
 import me.zombieman.bannedblockplus.BannedBlockPlus;
+import me.zombieman.bannedblockplus.commands.ToggleAddBlockCommand;
 import me.zombieman.bannedblockplus.data.BlockData;
 import me.zombieman.bannedblockplus.data.SaveBlockData;
 import me.zombieman.bannedblockplus.utils.ColorUtils;
+import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -42,6 +46,30 @@ public class BlockPlaceListener implements Listener {
                             .replace("%player%", p.getName())));
                 }
             }
+        }
+    }
+
+
+    @EventHandler(priority = EventPriority.LOW)
+    public void onBreakToggledAddBannedBlock(BlockPlaceEvent event) {
+        Player player = event.getPlayer();
+
+        if (ToggleAddBlockCommand.toggledPlayers.contains(player.getUniqueId())) {
+            event.setCancelled(true);
+            Block block = event.getBlock();
+            FileConfiguration config = plugin.getConfig();
+            List<String> blocks = config.getStringList("bannedBlocks");
+
+            String blockTypeName = block.getType().toString();
+            if (blocks.contains(blockTypeName)) {
+                player.sendMessage(ChatColor.RED + "This block is already banned!");
+                return;
+            }
+
+            blocks.add(blockTypeName);
+            config.set("bannedBlocks", blocks);
+
+            player.sendMessage(ChatColor.GREEN + "Added " + blockTypeName + " to the list of banned blocks.");
         }
     }
 }

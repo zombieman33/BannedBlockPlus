@@ -44,7 +44,7 @@ public class ToggleAddBlockCommand implements CommandExecutor {
         if (contains) toggledPlayers.remove(uuid);
         else toggledPlayers.add(uuid);
 
-        p.sendMessage(ColorUtils.color("&aToggled banned blocks adder " + (contains ? "off" : "on") + "!"));
+        p.sendMessage(ColorUtils.color("&aToggled banned blocks: " + (contains ? "off" : "on") + "!"));
 
         return false;
     }

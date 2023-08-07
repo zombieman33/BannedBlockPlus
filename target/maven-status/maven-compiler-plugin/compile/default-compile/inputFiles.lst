@@ -10,5 +10,6 @@
 /Users/admin/IdeaProjects/BannedBlockPlus/src/main/java/me/zombieman/bannedblockplus/utils/ColorUtils.java
 /Users/admin/IdeaProjects/BannedBlockPlus/src/main/java/me/zombieman/bannedblockplus/data/SaveData.java
 /Users/admin/IdeaProjects/BannedBlockPlus/src/main/java/me/zombieman/bannedblockplus/commands/ToggleBypassCommand.java
+/Users/admin/IdeaProjects/BannedBlockPlus/src/main/java/me/zombieman/bannedblockplus/commands/ToggleAddBlockCommand.java
 /Users/admin/IdeaProjects/BannedBlockPlus/src/main/java/me/zombieman/bannedblockplus/listeners/BlockPlaceListener.java
 /Users/admin/IdeaProjects/BannedBlockPlus/src/main/java/me/zombieman/bannedblockplus/data/SaveBlockData.java
