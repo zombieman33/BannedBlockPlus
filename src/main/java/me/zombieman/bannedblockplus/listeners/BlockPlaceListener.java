@@ -3,6 +3,7 @@ package me.zombieman.bannedblockplus.listeners;
 import me.zombieman.bannedblockplus.BannedBlockPlus;
 import me.zombieman.bannedblockplus.commands.ToggleAddBlockCommand;
 import me.zombieman.bannedblockplus.data.BlockData;
+import me.zombieman.bannedblockplus.data.PlayerData;
 import me.zombieman.bannedblockplus.data.SaveBlockData;
 import me.zombieman.bannedblockplus.utils.ColorUtils;
 import org.bukkit.ChatColor;
@@ -54,7 +55,8 @@ public class BlockPlaceListener implements Listener {
     public void onBreakToggledAddBannedBlock(BlockPlaceEvent event) {
         Player player = event.getPlayer();
 
-        if (ToggleAddBlockCommand.toggledPlayers.contains(player.getUniqueId())) {
+        PlayerData playerData = new PlayerData(plugin);
+        if (playerData.checkToggleBlocks(player)) {
             event.setCancelled(true);
             Block block = event.getBlock();
             FileConfiguration config = plugin.getConfig();

@@ -18,8 +18,6 @@ import java.util.UUID;
 public class ToggleAddBlockCommand implements CommandExecutor {
 
     private final BannedBlockPlus plugin;
-    public static final List<UUID> toggledPlayers = new ArrayList<>();
-
 
     public ToggleAddBlockCommand(BannedBlockPlus plugin) {
         this.plugin = plugin;
@@ -34,18 +32,12 @@ public class ToggleAddBlockCommand implements CommandExecutor {
 
         Player p = (Player) sender;
 
-        if (!p.hasPermission("bannedblockplus.command.toggleaddbannedblock")) {
+        if (p.hasPermission("bannedblockplus.command.toggleaddbannedblock")) {
+            PlayerData playerData = new PlayerData(plugin);
+            playerData.saveToggleAddBannedBlocks(p);
+        } else {
             HelpMessages.noPermission(p);
         }
-
-        UUID uuid = p.getUniqueId();
-
-        boolean contains = toggledPlayers.contains(uuid);
-        if (contains) toggledPlayers.remove(uuid);
-        else toggledPlayers.add(uuid);
-
-        p.sendMessage(ColorUtils.color("&aToggled banned blocks: " + (contains ? "off" : "on") + "!"));
-
         return false;
     }
 }

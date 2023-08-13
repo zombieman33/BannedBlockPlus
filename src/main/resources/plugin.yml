@@ -3,20 +3,20 @@ version: '${project.version}'
 main: me.zombieman.bannedblockplus.BannedBlockPlus
 api-version: '1.16'
 commands:
-  addbannedblock:
+  addbannedblocks:
     aliases:
-      - addblock
-  removebannedblock:
+      - addblocks
+  removebannedblocks:
     aliases:
-      - removeblock
-  checkbannedblock:
+      - removeblocks
+  checkbannedblocks:
     aliases:
-      - checkblock
-  bypassbannedblock:
+      - checkblocks
+  bypassbannedblocks:
     aliases:
-      - bypassblock
-  listbannedblock:
+      - bypassblocks
+  listbannedblocks:
     aliases:
-      - listblock
-  toggleaddbannedblock:
+      - listblocks
+  toggleaddbannedblocks:
     aliases: [togglebannedblocksadder, toggleaddbannedblocks]

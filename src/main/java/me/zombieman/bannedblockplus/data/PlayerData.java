@@ -11,9 +11,11 @@ import java.util.UUID;
 
 public class PlayerData {
     private BannedBlockPlus plugin;
+
     public PlayerData(BannedBlockPlus plugin) {
         this.plugin = plugin;
     }
+
     public void savePlayer(Player p) {
         File playerDataFile = new File(plugin.getDataFolder(), "playerData.yml");
         FileConfiguration playerDataConfig = YamlConfiguration.loadConfiguration(playerDataFile);
@@ -28,6 +30,7 @@ public class PlayerData {
         }
         SaveData.saveData(playerDataConfig, playerDataFile);
     }
+
     public void removePlayer(Player p, String message) {
         File playerDataFile = new File(plugin.getDataFolder(), "playerData.yml");
         FileConfiguration playerDataConfig = YamlConfiguration.loadConfiguration(playerDataFile);
@@ -59,6 +62,32 @@ public class PlayerData {
                 toSend.sendMessage(ColorUtils.color("&c'" + p.getName() + "' needs the permission 'bannedblockplus.command.bypass'"));
                 this.forceSave(p, false);
             }
+        }
+    }
+
+    public void saveToggleAddBannedBlocks(Player p) {
+        File playerDataFile = new File(plugin.getDataFolder(), "playerData.yml");
+        FileConfiguration playerDataConfig = YamlConfiguration.loadConfiguration(playerDataFile);
+        UUID pUUID = p.getUniqueId();
+        boolean hasEnabled = playerDataConfig.getBoolean(pUUID + ".toggleaddblocks", false);
+        if (hasEnabled) {
+            playerDataConfig.set(pUUID + ".toggleaddblocks", false);
+            removePlayer(p, "&aToggle Add Banned Blocks &f[&cDisabled&f]");
+        } else {
+            playerDataConfig.set(pUUID + ".toggleaddblocks", true);
+            p.sendMessage(ColorUtils.color("&aToggle Add Banned Blocks &f[&aEnabled&f]"));
+        }
+        SaveData.saveData(playerDataConfig, playerDataFile);
+    }
+    public boolean checkToggleBlocks(Player p) {
+        File playerDataFile = new File(plugin.getDataFolder(), "playerData.yml");
+        FileConfiguration playerDataConfig = YamlConfiguration.loadConfiguration(playerDataFile);
+        UUID pUUID = p.getUniqueId();
+        boolean hasEnabled = playerDataConfig.getBoolean(pUUID + ".toggleaddblocks", false);
+        if (hasEnabled) {
+            return true;
+        } else {
+            return false;
         }
     }
 }

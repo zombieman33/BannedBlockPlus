@@ -29,27 +29,27 @@ public final class BannedBlockPlus extends JavaPlugin {
 
         // Commands
         AddBlockCommand addBlockCommand = new AddBlockCommand(this);
-        PluginCommand addBlockCmd = getCommand("addbannedblock");
+        PluginCommand addBlockCmd = getCommand("addbannedblocks");
         if (addBlockCmd != null) addBlockCmd.setExecutor(addBlockCommand);
 
         RemoveBlockCommand removeBlockCommand = new RemoveBlockCommand(this);
-        PluginCommand removeBlockCmd = getCommand("removebannedblock");
+        PluginCommand removeBlockCmd = getCommand("removebannedblocks");
         if (removeBlockCmd != null) removeBlockCmd.setExecutor(removeBlockCommand);
 
         CheckBlockCommand checkBlockCommand = new CheckBlockCommand(this);
-        PluginCommand checkBlockCmd = getCommand("checkbannedblock");
+        PluginCommand checkBlockCmd = getCommand("checkbannedblocks");
         if (checkBlockCmd != null) checkBlockCmd.setExecutor(checkBlockCommand);
 
         ToggleBypassCommand ToggleBypassCommand = new ToggleBypassCommand(this);
-        PluginCommand toggleBypassCmd = getCommand("bypassbannedblock");
+        PluginCommand toggleBypassCmd = getCommand("bypassbannedblocks");
         if (toggleBypassCmd != null) toggleBypassCmd.setExecutor(ToggleBypassCommand);
 
         ToggleAddBlockCommand toggleAddBlockCommand = new ToggleAddBlockCommand(this);
-        PluginCommand toggleAddBlockPlCmd = getCommand("toggleaddbannedblock");
+        PluginCommand toggleAddBlockPlCmd = getCommand("toggleaddbannedblocks");
         if (toggleAddBlockPlCmd != null) toggleAddBlockPlCmd.setExecutor(toggleAddBlockCommand);
 
         ListOfBlocksCommand listOfBlocksCommand = new ListOfBlocksCommand(this);
-        PluginCommand listOfBlockCmd = getCommand("listbannedblock");
+        PluginCommand listOfBlockCmd = getCommand("listbannedblocks");
         if (listOfBlockCmd != null) listOfBlockCmd.setExecutor(listOfBlocksCommand);
 
         // Data
