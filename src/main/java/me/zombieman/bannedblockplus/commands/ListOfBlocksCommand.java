@@ -36,7 +36,7 @@ public class ListOfBlocksCommand implements CommandExecutor {
                 p.sendMessage(" ");
                 String blockList = String.join(", ", blocks);
                 TextComponent isnotinlist = new TextComponent(ColorUtils.color("&a" + blockList));
-                isnotinlist.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/listblock " + blockList));
+                isnotinlist.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/listblocks " + blockList));
                 isnotinlist.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
                         new ComponentBuilder("Click To Check: " + blockList).color(net.md_5.bungee.api.ChatColor.GRAY).italic(true).create()));
                 p.spigot().sendMessage(isnotinlist);

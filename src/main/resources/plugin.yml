@@ -18,5 +18,12 @@ commands:
   listbannedblocks:
     aliases:
       - listblocks
+  reloadbannedblocksconfig:
+    aliases:
+      - reloadconfig
+  clearlistofbannedblocks:
+    aliases:
+      - clearbannedblocks
+      - clearblocks
   toggleaddbannedblocks:
     aliases: [togglebannedblocksadder, toggleaddbannedblocks]

@@ -52,6 +52,14 @@ public final class BannedBlockPlus extends JavaPlugin {
         PluginCommand listOfBlockCmd = getCommand("listbannedblocks");
         if (listOfBlockCmd != null) listOfBlockCmd.setExecutor(listOfBlocksCommand);
 
+        ReloadConfigCommand reloadConfigCommand = new ReloadConfigCommand(this);
+        PluginCommand reloadConfigCmd = getCommand("reloadbannedblocksconfig");
+        if (reloadConfigCmd != null) reloadConfigCmd.setExecutor(reloadConfigCommand);
+
+        ClearBannedBlocksCommand clearBannedBlocksCommand = new ClearBannedBlocksCommand(this);
+        PluginCommand clearBannedBlocksCmd = getCommand("clearlistofbannedblocks");
+        if (clearBannedBlocksCmd != null) clearBannedBlocksCmd.setExecutor(clearBannedBlocksCommand);
+
         // Data
         new BlockData(this);
         new PlayerData(this);
