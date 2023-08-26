@@ -4,5 +4,12 @@ removeBannedBlockMessage: '&aYou removed %block% from the list of banned blocks.
 checkBannedBlockMessageSuccess: '&a%block-name% is in the list of banned blocks.'
 checkBannedBlockMessageError: '&c%block-name% is not the list of banned blocks.'
 
-bannedBlockMessage: '&c%block% is banned.'
+message:
+  shouldSendTheSameMessage: true
+  bannedBlockMessage: '&c%block-name% is banned.'
+  # These messages will only work if 'shouldSendTheSameMessage: false'
+  # If it's not false the message will be the 'bannedBlockMessage'
+  bannedBlockMessagePlace: '&cYou cannot place %block-name%'
+  bannedBlockMessageBreak: '&cYou cannot break %block-name%'
+
 bannedBlocks:

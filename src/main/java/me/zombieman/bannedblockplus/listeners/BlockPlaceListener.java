@@ -6,6 +6,7 @@ import me.zombieman.bannedblockplus.data.BlockData;
 import me.zombieman.bannedblockplus.data.PlayerData;
 import me.zombieman.bannedblockplus.data.SaveBlockData;
 import me.zombieman.bannedblockplus.utils.ColorUtils;
+import me.zombieman.bannedblockplus.utils.ReplaceString;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -41,10 +42,13 @@ public class BlockPlaceListener implements Listener {
             if (!wantsToBypass) {
                 if (!e.isCancelled()) {
                     e.setCancelled(true);
-                    p.sendMessage(ColorUtils.color(plugin.getConfig().getString("bannedBlockMessage")
-                            .replace("%block%", block.getType().name())
-                            .replace("%block-name%", SaveBlockData.blockName(new ItemStack(block.getType())))
-                            .replace("%player%", p.getName())));
+                    if (plugin.getConfig().getBoolean("message.shouldSendTheSameMessage")) {
+                        String formatted = ReplaceString.replace(plugin.getConfig().getString("message.bannedBlockMessage"), block, p);
+                        p.sendMessage(ColorUtils.color(formatted));
+                    } else {
+                        String formatted = ReplaceString.replace(plugin.getConfig().getString("message.bannedBlockMessagePlace"), block, p);
+                        p.sendMessage(ColorUtils.color(formatted));
+                    }
                 }
             }
         }
