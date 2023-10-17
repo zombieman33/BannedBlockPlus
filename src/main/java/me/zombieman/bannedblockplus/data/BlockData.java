@@ -1,6 +1,7 @@
 package me.zombieman.bannedblockplus.data;
 
 import me.zombieman.bannedblockplus.BannedBlockPlus;
+import me.zombieman.bannedblockplus.managers.PlayerDataManager;
 import me.zombieman.bannedblockplus.utils.ColorUtils;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -21,10 +22,8 @@ public class BlockData {
         List<String> blocks = plugin.getConfig().getStringList("bannedBlocks");
         if (blocks.contains(block.getType().toString())) {
             if (!p.hasPermission("bannedblockplus.command.bypass")) {
-                File playerDataFile = new File(plugin.getDataFolder(), "playerData.yml");
-                FileConfiguration playerDataConfig = YamlConfiguration.loadConfiguration(playerDataFile);
                 UUID pUUID = p.getUniqueId();
-                boolean wantsToBypass = playerDataConfig.getBoolean(pUUID + ".enabled", false);
+                boolean wantsToBypass = PlayerDataManager.getPlayerDataConfig(plugin, pUUID).getBoolean(pUUID + ".enabled", false);
                 if (wantsToBypass) {
                     if (!isCanceled) {
                         block.setType(block.getType());

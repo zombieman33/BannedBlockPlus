@@ -6,7 +6,7 @@
 
     <groupId>me.zombieman</groupId>
     <artifactId>BannedBlockPlus</artifactId>
-    <version>1.3.0</version>
+    <version>1.4.0</version>
     <packaging>jar</packaging>
 
     <name>BannedBlockPlus</name>
@@ -88,6 +88,11 @@
             <groupId>com.github.lightlibs</groupId>
             <artifactId>LegacyColorCodeParser</artifactId>
             <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>22.0.0</version>
         </dependency>
     </dependencies>
 </project>

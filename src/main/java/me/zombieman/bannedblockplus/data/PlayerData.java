@@ -1,6 +1,7 @@
 package me.zombieman.bannedblockplus.data;
 
 import me.zombieman.bannedblockplus.BannedBlockPlus;
+import me.zombieman.bannedblockplus.managers.PlayerDataManager;
 import me.zombieman.bannedblockplus.utils.ColorUtils;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -17,42 +18,34 @@ public class PlayerData {
     }
 
     public void savePlayer(Player p) {
-        File playerDataFile = new File(plugin.getDataFolder(), "playerData.yml");
-        FileConfiguration playerDataConfig = YamlConfiguration.loadConfiguration(playerDataFile);
         UUID pUUID = p.getUniqueId();
-        boolean hasEnabled = playerDataConfig.getBoolean(pUUID + ".enabled", false);
+        boolean hasEnabled = PlayerDataManager.getPlayerDataConfig(plugin, pUUID).getBoolean(pUUID + ".enabled", false);
         if (hasEnabled) {
-            playerDataConfig.set(pUUID + ".enabled", false);
+            PlayerDataManager.getPlayerDataConfig(plugin, pUUID).set(pUUID + ".enabled", false);
             removePlayer(p, "&aBypass Banned Blocks &f[&cDisabled&f]");
         } else {
-            playerDataConfig.set(pUUID + ".enabled", true);
+            PlayerDataManager.getPlayerDataConfig(plugin, pUUID).set(pUUID + ".enabled", true);
             p.sendMessage(ColorUtils.color("&aBypass Banned Blocks &f[&aEnabled&f]"));
         }
-        SaveData.saveData(playerDataConfig, playerDataFile);
+        PlayerDataManager.savePlayerData(plugin, p);
     }
 
     public void removePlayer(Player p, String message) {
-        File playerDataFile = new File(plugin.getDataFolder(), "playerData.yml");
-        FileConfiguration playerDataConfig = YamlConfiguration.loadConfiguration(playerDataFile);
         UUID pUUID = p.getUniqueId();
-        playerDataConfig.set(pUUID + ".enabled", false);
-        plugin.saveConfig();
+        PlayerDataManager.getPlayerDataConfig(plugin, pUUID).set(pUUID + ".enabled", false);
+        PlayerDataManager.savePlayerData(plugin, p);
         p.sendMessage(ColorUtils.color(message));
     }
 
     public void forceSave(Player p, boolean enable) {
-        File playerDataFile = new File(plugin.getDataFolder(), "playerData.yml");
-        FileConfiguration playerDataConfig = YamlConfiguration.loadConfiguration(playerDataFile);
         UUID pUUID = p.getUniqueId();
-        playerDataConfig.set(pUUID + ".enabled", enable);
-        SaveData.saveData(playerDataConfig, playerDataFile);
+        PlayerDataManager.getPlayerDataConfig(plugin, pUUID).set(pUUID + ".enabled", enable);
+        PlayerDataManager.savePlayerData(plugin, p);
     }
 
     public void checkPlayer(Player p, Player toSend) {
-        File playerDataFile = new File(plugin.getDataFolder(), "playerData.yml");
-        FileConfiguration playerDataConfig = YamlConfiguration.loadConfiguration(playerDataFile);
         UUID pUUID = p.getUniqueId();
-        boolean hasEnabled = playerDataConfig.getBoolean(pUUID + ".enabled", false);
+        boolean hasEnabled = PlayerDataManager.getPlayerDataConfig(plugin, pUUID).getBoolean(pUUID + ".enabled", false);
         if (hasEnabled) {
             toSend.sendMessage(ColorUtils.color("&aBypass Banned Blocks &f[&cDisabled&f] &afor: " + p.getName()));
         } else {
@@ -66,24 +59,20 @@ public class PlayerData {
     }
 
     public void saveToggleAddBannedBlocks(Player p) {
-        File playerDataFile = new File(plugin.getDataFolder(), "playerData.yml");
-        FileConfiguration playerDataConfig = YamlConfiguration.loadConfiguration(playerDataFile);
         UUID pUUID = p.getUniqueId();
-        boolean hasEnabled = playerDataConfig.getBoolean(pUUID + ".toggleaddblocks", false);
+        boolean hasEnabled = PlayerDataManager.getPlayerDataConfig(plugin, pUUID).getBoolean(pUUID + ".toggleaddblocks", false);
         if (hasEnabled) {
-            playerDataConfig.set(pUUID + ".toggleaddblocks", false);
+            PlayerDataManager.getPlayerDataConfig(plugin, pUUID).set(pUUID + ".toggleaddblocks", false);
             removePlayer(p, "&aToggle Add Banned Blocks &f[&cDisabled&f]");
         } else {
-            playerDataConfig.set(pUUID + ".toggleaddblocks", true);
+            PlayerDataManager.getPlayerDataConfig(plugin, pUUID).set(pUUID + ".toggleaddblocks", true);
             p.sendMessage(ColorUtils.color("&aToggle Add Banned Blocks &f[&aEnabled&f]"));
         }
-        SaveData.saveData(playerDataConfig, playerDataFile);
+        PlayerDataManager.savePlayerData(plugin, p);
     }
     public boolean checkToggleBlocks(Player p) {
-        File playerDataFile = new File(plugin.getDataFolder(), "playerData.yml");
-        FileConfiguration playerDataConfig = YamlConfiguration.loadConfiguration(playerDataFile);
         UUID pUUID = p.getUniqueId();
-        boolean hasEnabled = playerDataConfig.getBoolean(pUUID + ".toggleaddblocks", false);
+        boolean hasEnabled = PlayerDataManager.getPlayerDataConfig(plugin, pUUID).getBoolean(pUUID + ".toggleaddblocks", false);
         if (hasEnabled) {
             return true;
         } else {

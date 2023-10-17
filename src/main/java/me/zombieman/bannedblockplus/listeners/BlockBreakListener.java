@@ -5,6 +5,7 @@ import me.zombieman.bannedblockplus.commands.ToggleAddBlockCommand;
 import me.zombieman.bannedblockplus.data.BlockData;
 import me.zombieman.bannedblockplus.data.PlayerData;
 import me.zombieman.bannedblockplus.data.SaveBlockData;
+import me.zombieman.bannedblockplus.managers.PlayerDataManager;
 import me.zombieman.bannedblockplus.utils.ColorUtils;
 import me.zombieman.bannedblockplus.utils.ReplaceString;
 import org.bukkit.ChatColor;
@@ -60,10 +61,8 @@ public class BlockBreakListener implements Listener {
         Block block = e.getBlock();
         List<String> blocks = plugin.getConfig().getStringList("bannedBlocks");
         if (blocks.contains(block.getType().toString())) {
-            File playerDataFile = new File(plugin.getDataFolder(), "playerData.yml");
-            FileConfiguration playerDataConfig = YamlConfiguration.loadConfiguration(playerDataFile);
             UUID pUUID = p.getUniqueId();
-            boolean wantsToBypass = playerDataConfig.getBoolean(pUUID + ".enabled", false);
+            boolean wantsToBypass = PlayerDataManager.getPlayerDataConfig(plugin, pUUID).getBoolean(pUUID + ".enabled", false);
             if (!wantsToBypass) {
                 if (!e.isCancelled()) {
                     e.setCancelled(true);
