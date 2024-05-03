@@ -19,6 +19,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class RemoveBlockCommand implements CommandExecutor, TabCompleter {
     private final BannedBlockPlus plugin;
@@ -38,7 +39,7 @@ public class RemoveBlockCommand implements CommandExecutor, TabCompleter {
             SaveBlockData saveBlockData = new SaveBlockData(plugin);
             if (args.length >= 1) {
                 String blockName = args[0].toUpperCase();
-                ItemStack block = new ItemStack(Material.valueOf(blockName));
+                ItemStack block = new ItemStack(Material.valueOf(blockName.toUpperCase()));
                 saveBlockData.removeBlockData(block, p);
             } else {
                 ItemStack heldItem = p.getInventory().getItemInMainHand();
@@ -61,6 +62,7 @@ public class RemoveBlockCommand implements CommandExecutor, TabCompleter {
             }
         }
 
-        return completions;
+        String lastArg = args[args.length - 1];
+        return completions.stream().filter(s -> s.startsWith(lastArg)).collect(Collectors.toList());
     }
 }

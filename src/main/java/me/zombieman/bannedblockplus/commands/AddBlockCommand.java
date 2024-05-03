@@ -1,6 +1,5 @@
 package me.zombieman.bannedblockplus.commands;
 
-import com.sun.tools.javac.jvm.Items;
 import me.zombieman.bannedblockplus.BannedBlockPlus;
 import me.zombieman.bannedblockplus.data.SaveBlockData;
 import me.zombieman.bannedblockplus.utils.ColorUtils;
@@ -16,6 +15,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AddBlockCommand implements CommandExecutor, TabCompleter {
     private final BannedBlockPlus plugin;
@@ -35,7 +35,7 @@ public class AddBlockCommand implements CommandExecutor, TabCompleter {
             SaveBlockData saveBlockData = new SaveBlockData(plugin);
             if (args.length >= 1) {
                 String blockName = args[0].toUpperCase();
-                ItemStack block = new ItemStack(Material.valueOf(blockName));
+                ItemStack block = new ItemStack(Material.valueOf(blockName.toUpperCase()));
                 saveBlockData.saveBlockData(block, p);
             } else {
                 ItemStack heldItem = p.getInventory().getItemInMainHand();
@@ -56,11 +56,12 @@ public class AddBlockCommand implements CommandExecutor, TabCompleter {
             if (player.hasPermission("bannedblockplus.command.addblock")) {
                 for (Material blocks : Material.values()) {
                     if (blocks.isBlock()) {
-                        completions.add(blocks.name());
+                        completions.add(blocks.name().toLowerCase());
                     }
                 }
             }
         }
-        return completions;
+        String lastArg = args[args.length - 1];
+        return completions.stream().filter(s -> s.startsWith(lastArg)).collect(Collectors.toList());
     }
 }

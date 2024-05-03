@@ -12,6 +12,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.checkerframework.checker.units.qual.C;
 
 import java.util.List;
 
@@ -41,6 +42,9 @@ public class ListOfBlocksCommand implements CommandExecutor {
                         new ComponentBuilder("Click To Check: " + blockList).color(net.md_5.bungee.api.ChatColor.GRAY).italic(true).create()));
                 p.spigot().sendMessage(isnotinlist);
                 p.sendMessage();
+                p.sendMessage(" ");
+                int amountOfBlocks = blocks.size();
+                p.sendMessage(ChatColor.GREEN + "%d Banned Blocks".formatted(amountOfBlocks));
             } else {
                 p.sendMessage(ColorUtils.color("&cThere isn't any banned blocks in this list."));
             }

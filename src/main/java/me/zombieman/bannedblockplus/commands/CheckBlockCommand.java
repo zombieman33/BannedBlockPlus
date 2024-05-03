@@ -1,6 +1,5 @@
 package me.zombieman.bannedblockplus.commands;
 
-import com.sun.tools.javac.jvm.Items;
 import me.zombieman.bannedblockplus.BannedBlockPlus;
 import me.zombieman.bannedblockplus.data.SaveBlockData;
 import me.zombieman.bannedblockplus.utils.ColorUtils;
@@ -20,6 +19,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CheckBlockCommand implements CommandExecutor, TabCompleter {
     private final BannedBlockPlus plugin;
@@ -40,7 +40,7 @@ public class CheckBlockCommand implements CommandExecutor, TabCompleter {
             SaveBlockData saveBlockData = new SaveBlockData(plugin);
             if (args.length >= 1) {
                 String itemName = args[0].toUpperCase();
-                ItemStack itemStack = new ItemStack(Material.valueOf(itemName));
+                ItemStack itemStack = new ItemStack(Material.valueOf(itemName.toUpperCase()));
                 saveBlockData.checkBlockData(itemStack, p);
             } else {
                 if (heldItem.getType().isBlock()) {
@@ -64,7 +64,7 @@ public class CheckBlockCommand implements CommandExecutor, TabCompleter {
             if (player.hasPermission("bannedblockplus.command.checkblock.block")) {
                 for (Material blocks : Material.values()) {
                     if (blocks.isBlock()) {
-                        completions.add(blocks.name());
+                        completions.add(blocks.name().toLowerCase());
                     }
                 }
 //                completions.add("grass block");
@@ -74,10 +74,11 @@ public class CheckBlockCommand implements CommandExecutor, TabCompleter {
             if (player.hasPermission("bannedblockplus.command.checkblock.player")) {
                 for (Player p : Bukkit.getOnlinePlayers()) {
                     String pName = p.getName();
-                    completions.add(pName);
+                    completions.add(pName.toLowerCase());
                 }
             }
         }
-        return completions;
+        String lastArg = args[args.length - 1];
+        return completions.stream().filter(s -> s.startsWith(lastArg)).collect(Collectors.toList());
     }
 }
