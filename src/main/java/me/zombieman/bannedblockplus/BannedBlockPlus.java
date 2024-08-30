@@ -28,6 +28,10 @@ public final class BannedBlockPlus extends JavaPlugin {
         PluginCommand addBlockCmd = getCommand("addbannedblocks");
         if (addBlockCmd != null) addBlockCmd.setExecutor(addBlockCommand);
 
+        AddAllBlocksCmd addAllBlocksCommand = new AddAllBlocksCmd(this);
+        PluginCommand addAllBlocksCmd = getCommand("addallblocks");
+        if (addAllBlocksCmd != null) addAllBlocksCmd.setExecutor(addAllBlocksCommand);
+
         RemoveBlockCommand removeBlockCommand = new RemoveBlockCommand(this);
         PluginCommand removeBlockCmd = getCommand("removebannedblocks");
         if (removeBlockCmd != null) removeBlockCmd.setExecutor(removeBlockCommand);

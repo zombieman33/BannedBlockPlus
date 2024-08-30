@@ -70,9 +70,6 @@ public class SaveBlockData {
             if (block.getType().isBlock()) {
                 List<String> blocks = plugin.getConfig().getStringList("bannedBlocks");
                 if (blocks.contains(blockName)) {
-                    blocks.remove(blockName);
-                    plugin.getConfig().set("bannedBlocks", blocks);
-                    plugin.saveConfig();
                     p.sendMessage(ColorUtils.color(plugin.getConfig().getString("checkBannedBlockMessageSuccess")
                             .replace("%block%", blockName)
                             .replace("%block-name%", blockName(block))

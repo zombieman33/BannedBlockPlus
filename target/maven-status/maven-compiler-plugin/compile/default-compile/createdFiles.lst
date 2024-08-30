@@ -1,6 +1,7 @@
 me\zombieman\bannedblockplus\BannedBlockPlus.class
 me\zombieman\bannedblockplus\commands\ReloadConfigCommand.class
 me\zombieman\bannedblockplus\utils\ColorUtils.class
+me\zombieman\bannedblockplus\commands\AddAllBlocksCmd.class
 me\zombieman\bannedblockplus\listeners\BlockPlaceListener.class
 me\zombieman\bannedblockplus\commands\CheckBlockCommand.class
 me\zombieman\bannedblockplus\commands\RemoveBlockCommand.class

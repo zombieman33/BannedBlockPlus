@@ -2,10 +2,14 @@ name: BannedBlockPlus
 version: '${project.version}'
 main: me.zombieman.bannedblockplus.BannedBlockPlus
 api-version: '1.16'
+authors: [zombieman]
 commands:
   addbannedblocks:
     aliases:
       - addblocks
+  addallblocks:
+    aliases:
+      - addall
   removebannedblocks:
     aliases:
       - removeblocks

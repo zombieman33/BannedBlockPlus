@@ -1,11 +1,15 @@
 name: BannedBlockPlus
-version: '1.6.0'
+version: '1.6.2'
 main: me.zombieman.bannedblockplus.BannedBlockPlus
 api-version: '1.16'
+authors: [zombieman]
 commands:
   addbannedblocks:
     aliases:
       - addblocks
+  addallblocks:
+    aliases:
+      - addall
   removebannedblocks:
     aliases:
       - removeblocks
