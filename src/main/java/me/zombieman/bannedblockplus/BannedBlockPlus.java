@@ -5,6 +5,7 @@ import me.zombieman.bannedblockplus.data.BlockData;
 import me.zombieman.bannedblockplus.data.SaveBlockData;
 import me.zombieman.bannedblockplus.data.PlayerData;
 import me.zombieman.bannedblockplus.listeners.BlockBreakListener;
+import me.zombieman.bannedblockplus.listeners.BlockDestroyListener;
 import me.zombieman.bannedblockplus.listeners.BlockPlaceListener;
 import me.zombieman.bannedblockplus.managers.PlayerDataManager;
 import org.bukkit.command.PluginCommand;
@@ -17,6 +18,9 @@ public final class BannedBlockPlus extends JavaPlugin {
     @Override
     public void onEnable() {
         // Plugin startup logic
+
+        PlayerDataManager.initDataFolder(this);
+
         File configFile = new File(getDataFolder(), "config.yml");
         if (!configFile.exists()) {
             getLogger().info("Config file not found, creating...");
@@ -67,6 +71,7 @@ public final class BannedBlockPlus extends JavaPlugin {
 
         new BlockBreakListener(this);
         new BlockPlaceListener(this);
+        new BlockDestroyListener(this);
 
         // Managers
         new PlayerDataManager();
