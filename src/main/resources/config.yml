@@ -12,4 +12,6 @@ message:
   bannedBlockMessagePlace: '&cYou cannot place %block-name%'
   bannedBlockMessageBreak: '&cYou cannot break %block-name%'
 
+ignoredRegions: {}
+
 bannedBlocks: {}

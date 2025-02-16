@@ -1,6 +1,5 @@
 package me.zombieman.bannedblockplus.managers;
 
-
 import me.zombieman.bannedblockplus.BannedBlockPlus;
 import org.bukkit.entity.Player;
 import org.bukkit.configuration.file.FileConfiguration;

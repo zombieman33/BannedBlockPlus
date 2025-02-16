@@ -8,12 +8,15 @@ import me.zombieman.bannedblockplus.listeners.BlockBreakListener;
 import me.zombieman.bannedblockplus.listeners.BlockDestroyListener;
 import me.zombieman.bannedblockplus.listeners.BlockPlaceListener;
 import me.zombieman.bannedblockplus.managers.PlayerDataManager;
+import me.zombieman.bannedblockplus.managers.RegionManager;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 
 public final class BannedBlockPlus extends JavaPlugin {
+
+    public RegionManager regionManager;
 
     @Override
     public void onEnable() {
@@ -76,6 +79,12 @@ public final class BannedBlockPlus extends JavaPlugin {
         // Managers
         new PlayerDataManager();
 
+        regionManager = new RegionManager();
+
+    }
+
+    public RegionManager getRegionManager() {
+        return regionManager;
     }
 
     @Override

@@ -62,19 +62,24 @@ public class BlockBreakListener implements Listener {
         List<String> blocks = plugin.getConfig().getStringList("bannedBlocks");
         if (blocks.contains(block.getType().toString())) {
             UUID pUUID = p.getUniqueId();
+
+            if (plugin.getRegionManager().isInRegion(plugin, block.getLocation())) return;
+
             boolean wantsToBypass = PlayerDataManager.getPlayerDataConfig(plugin, pUUID).getBoolean(pUUID + ".enabled", false);
-            if (!wantsToBypass) {
-                if (!e.isCancelled()) {
-                    e.setCancelled(true);
-                    if (plugin.getConfig().getBoolean("message.shouldSendTheSameMessage")) {
-                        String formatted = ReplaceString.replace(plugin.getConfig().getString("message.bannedBlockMessage"), block, p);
-                        p.sendMessage(ColorUtils.color(formatted));
-                    } else {
-                        String formatted = ReplaceString.replace(plugin.getConfig().getString("message.bannedBlockMessageBreak"), block, p);
-                        p.sendMessage(ColorUtils.color(formatted));
-                    }
-                }
+            if (wantsToBypass) return;
+
+            if (e.isCancelled()) return;
+
+            e.setCancelled(true);
+
+            if (plugin.getConfig().getBoolean("message.shouldSendTheSameMessage")) {
+                String formatted = ReplaceString.replace(plugin.getConfig().getString("message.bannedBlockMessage"), block, p);
+                p.sendMessage(ColorUtils.color(formatted));
+            } else {
+                String formatted = ReplaceString.replace(plugin.getConfig().getString("message.bannedBlockMessageBreak"), block, p);
+                p.sendMessage(ColorUtils.color(formatted));
             }
+
         }
 //        boolean isCanceled = e.isCancelled();
 //        BlockData blockData = new BlockData(plugin);
