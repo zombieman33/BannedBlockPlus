@@ -9,6 +9,7 @@ import me.zombieman.bannedblockplus.listeners.BlockDestroyListener;
 import me.zombieman.bannedblockplus.listeners.BlockPlaceListener;
 import me.zombieman.bannedblockplus.managers.PlayerDataManager;
 import me.zombieman.bannedblockplus.managers.RegionManager;
+import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -28,6 +29,18 @@ public final class BannedBlockPlus extends JavaPlugin {
         if (!configFile.exists()) {
             getLogger().info("Config file not found, creating...");
             saveResource("config.yml", false);
+        }
+
+
+        // Check for WorldGuard
+        if (getServer().getPluginManager().getPlugin("WorldGuard") == null) {
+            getLogger().warning("-----------------------------------------");
+            getLogger().warning("WARNING");
+            getLogger().warning("WorldGuard plugin is not installed!");
+            getLogger().warning("BannedBlockPlus is now being disabled!");
+            getLogger().warning("-----------------------------------------");
+            Bukkit.getPluginManager().disablePlugin(this);
+            return;
         }
 
         // Commands
