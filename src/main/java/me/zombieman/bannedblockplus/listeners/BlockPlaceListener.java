@@ -26,36 +26,37 @@ import java.util.UUID;
 
 public class BlockPlaceListener implements Listener {
     private BannedBlockPlus plugin;
+
     public BlockPlaceListener(BannedBlockPlus plugin) {
         this.plugin = plugin;
         this.plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
+
     @EventHandler
     public void onPlace(BlockPlaceEvent e) {
         Player p = e.getPlayer();
         Block block = e.getBlock();
         List<String> blocks = plugin.getConfig().getStringList("bannedBlocks");
-        if (blocks.contains(block.getType().toString())) {
-            UUID pUUID = p.getUniqueId();
+        if (!blocks.contains(block.getType().toString())) return;
+        UUID pUUID = p.getUniqueId();
 
-            boolean wantsToBypass = PlayerDataManager.getPlayerDataConfig(plugin, pUUID).getBoolean(pUUID + ".enabled", false);
-            if (wantsToBypass) return;
+        boolean wantsToBypass = PlayerDataManager.getPlayerDataConfig(plugin, pUUID).getBoolean(pUUID + ".enabled", false);
+        if (wantsToBypass) return;
 
-            if (plugin.getRegionManager().isInRegion(plugin, block.getLocation())) return;
+        if (plugin.getRegionManager().isInRegion(plugin, block.getLocation())) return;
 
-            if (e.isCancelled()) return;
+        if (e.isCancelled()) return;
 
-            e.setCancelled(true);
+        e.setCancelled(true);
 
-            if (plugin.getConfig().getBoolean("message.shouldSendTheSameMessage")) {
-                String formatted = ReplaceString.replace(plugin.getConfig().getString("message.bannedBlockMessage"), block, p);
-                p.sendMessage(ColorUtils.color(formatted));
-            } else {
-                String formatted = ReplaceString.replace(plugin.getConfig().getString("message.bannedBlockMessagePlace"), block, p);
-                p.sendMessage(ColorUtils.color(formatted));
-            }
-
+        if (plugin.getConfig().getBoolean("message.shouldSendTheSameMessage")) {
+            String formatted = ReplaceString.replace(plugin.getConfig().getString("message.bannedBlockMessage"), block, p);
+            p.sendMessage(ColorUtils.color(formatted));
+            return;
         }
+
+        String formatted = ReplaceString.replace(plugin.getConfig().getString("message.bannedBlockMessagePlace"), block, p);
+        p.sendMessage(ColorUtils.color(formatted));
     }
 
 
@@ -64,22 +65,23 @@ public class BlockPlaceListener implements Listener {
         Player player = event.getPlayer();
 
         PlayerData playerData = new PlayerData(plugin);
-        if (playerData.checkToggleBlocks(player)) {
-            event.setCancelled(true);
-            Block block = event.getBlock();
-            FileConfiguration config = plugin.getConfig();
-            List<String> blocks = config.getStringList("bannedBlocks");
+        if (!playerData.checkToggleBlocks(player)) return;
 
-            String blockTypeName = block.getType().toString();
-            if (blocks.contains(blockTypeName)) {
-                player.sendMessage(ChatColor.RED + "This block is already banned!");
-                return;
-            }
+        event.setCancelled(true);
 
-            blocks.add(blockTypeName);
-            config.set("bannedBlocks", blocks);
+        Block block = event.getBlock();
+        FileConfiguration config = plugin.getConfig();
+        List<String> blocks = config.getStringList("bannedBlocks");
 
-            player.sendMessage(ChatColor.GREEN + "Added " + blockTypeName + " to the list of banned blocks.");
+        String blockTypeName = block.getType().toString();
+        if (blocks.contains(blockTypeName)) {
+            player.sendMessage(ChatColor.RED + "This block is already banned!");
+            return;
         }
+
+        blocks.add(blockTypeName);
+        config.set("bannedBlocks", blocks);
+
+        player.sendMessage(ChatColor.GREEN + "Added " + blockTypeName + " to the list of banned blocks.");
     }
 }

@@ -48,13 +48,13 @@ public class PlayerData {
         boolean hasEnabled = PlayerDataManager.getPlayerDataConfig(plugin, pUUID).getBoolean(pUUID + ".enabled", false);
         if (hasEnabled) {
             toSend.sendMessage(ColorUtils.color("&aBypass Banned Blocks &f[&cDisabled&f] &afor: " + p.getName()));
-        } else {
-            toSend.sendMessage(ColorUtils.color("&aBypass Banned Blocks &f[&aEnabled&f] &afor: " + p.getName()));
-            if (!toSend.hasPermission("bannedblockplus.command.bypass")) {
-                toSend.sendMessage(ColorUtils.color("&c'" + p.getName() + "' does not have permission to have this enabled, disabling."));
-                toSend.sendMessage(ColorUtils.color("&c'" + p.getName() + "' needs the permission 'bannedblockplus.command.bypass'"));
-                this.forceSave(p, false);
-            }
+            return;
+        }
+        toSend.sendMessage(ColorUtils.color("&aBypass Banned Blocks &f[&aEnabled&f] &afor: " + p.getName()));
+        if (!toSend.hasPermission("bannedblockplus.command.bypass")) {
+            toSend.sendMessage(ColorUtils.color("&c'" + p.getName() + "' does not have permission to have this enabled, disabling."));
+            toSend.sendMessage(ColorUtils.color("&c'" + p.getName() + "' needs the permission 'bannedblockplus.command.bypass'"));
+            this.forceSave(p, false);
         }
     }
 
@@ -72,11 +72,6 @@ public class PlayerData {
     }
     public boolean checkToggleBlocks(Player p) {
         UUID pUUID = p.getUniqueId();
-        boolean hasEnabled = PlayerDataManager.getPlayerDataConfig(plugin, pUUID).getBoolean(pUUID + ".toggleaddblocks", false);
-        if (hasEnabled) {
-            return true;
-        } else {
-            return false;
-        }
+        return PlayerDataManager.getPlayerDataConfig(plugin, pUUID).getBoolean(pUUID + ".toggleaddblocks", false);
     }
 }

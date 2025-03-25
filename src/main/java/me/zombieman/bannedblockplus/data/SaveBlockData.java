@@ -20,22 +20,25 @@ public class SaveBlockData {
 
     public void saveBlockData(ItemStack block, Player p) {
         String blockName = block.getType().toString();
-        if (block.getType().isBlock() && !block.getType().isAir()) {
-            List<String> blocks = plugin.getConfig().getStringList("bannedBlocks");
-            if (!blocks.contains(blockName)) {
-                blocks.add(blockName);
-                plugin.getConfig().set("bannedBlocks", blocks);
-                plugin.saveConfig();
-                p.sendMessage(ColorUtils.color(plugin.getConfig().getString("addBannedBlockMessage")
-                        .replace("%block%", blockName)
-                        .replace("%block-name%", this.blockName(block))
-                        .replace("%player%", p.getName())));
-            } else {
-                p.sendMessage(ColorUtils.color("&cThis block is already added to the list of banned blocks."));
-            }
-        } else {
+        if (!block.getType().isBlock() || block.getType().isAir()) {
             p.sendMessage(ColorUtils.color("&cYou can't add " + SaveBlockData.blockName(block) + " as a banned block!"));
+            return;
         }
+
+        List<String> blocks = plugin.getConfig().getStringList("bannedBlocks");
+        if (blocks.contains(blockName)) {
+            p.sendMessage(ColorUtils.color("&cThis block is already added to the list of banned blocks."));
+            return;
+        }
+
+        blocks.add(blockName);
+        plugin.getConfig().set("bannedBlocks", blocks);
+        plugin.saveConfig();
+        p.sendMessage(ColorUtils.color(plugin.getConfig().getString("addBannedBlockMessage")
+                .replace("%block%", blockName)
+                .replace("%block-name%", this.blockName(block))
+                .replace("%player%", p.getName())));
+
     }
     public void removeBlockData(ItemStack block, Player p) {
         String blockName = block.getType().toString();

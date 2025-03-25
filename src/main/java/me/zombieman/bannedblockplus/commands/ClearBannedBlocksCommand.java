@@ -29,20 +29,22 @@ public class ClearBannedBlocksCommand implements CommandExecutor {
         }
         Player p = (Player) sender;
 
-        if (p.hasPermission("bannedblockplus.command.clearblocks")) {
-            List<String> bannedBlocks = plugin.getConfig().getStringList("bannedBlocks");
-            if (bannedBlocks.isEmpty()) {
-                p.sendMessage(ColorUtils.color("&cThere isn't any blocks in the list of banned blocks."));
-            } else {
-                int size = bannedBlocks.size();
-                bannedBlocks.clear();
-                plugin.getConfig().set("bannedBlocks", bannedBlocks);
-                plugin.saveConfig();
-                p.sendMessage(ColorUtils.color("&aSuccessfully cleared x" + size + " banned blocks."));
-            }
-        } else {
+        if (!p.hasPermission("bannedblockplus.command.clearblocks")) {
             HelpMessages.noPermission(p);
+            return false;
         }
-        return false;
+
+        List<String> bannedBlocks = plugin.getConfig().getStringList("bannedBlocks");
+        if (bannedBlocks.isEmpty()) {
+            p.sendMessage(ColorUtils.color("&cThere isn't any blocks in the list of banned blocks."));
+            return false;
+        }
+
+        int size = bannedBlocks.size();
+        bannedBlocks.clear();
+        plugin.getConfig().set("bannedBlocks", bannedBlocks);
+        plugin.saveConfig();
+        p.sendMessage(ColorUtils.color("&aSuccessfully cleared x" + size + " banned blocks."));
+        return true;
     }
 }

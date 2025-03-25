@@ -26,15 +26,16 @@ public class ReloadConfigCommand implements CommandExecutor {
         }
         Player p = (Player) sender;
 
-        if (p.hasPermission("bannedblockplus.command.reloadconfig")) {
-            try {
-                plugin.reloadConfig();
-                p.sendMessage(ColorUtils.color("&aConfig reloaded successfully!"));
-            } catch (Exception e) {
-                p.sendMessage(ColorUtils.color("&cAn error occurred while reloading the plugin: " + e.getMessage()));
-            }
-        } else {
+        if (!p.hasPermission("bannedblockplus.command.reloadconfig")) {
             HelpMessages.noPermission(p);
+            return false;
+        }
+
+        try {
+            plugin.reloadConfig();
+            p.sendMessage(ColorUtils.color("&aConfig reloaded successfully!"));
+        } catch (Exception e) {
+            p.sendMessage(ColorUtils.color("&cAn error occurred while reloading the plugin: " + e.getMessage()));
         }
         return false;
     }

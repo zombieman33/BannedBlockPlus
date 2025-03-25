@@ -36,23 +36,24 @@ public class BlockBreakListener implements Listener {
     public void onBreakToggledAddBannedBlock(BlockBreakEvent event) {
         Player player = event.getPlayer();
         PlayerData playerData = new PlayerData(plugin);
-        if (playerData.checkToggleBlocks(player)) {
-            event.setCancelled(true);
-            Block block = event.getBlock();
-            FileConfiguration config = plugin.getConfig();
-            List<String> blocks = config.getStringList("bannedBlocks");
+        if (!playerData.checkToggleBlocks(player)) return;
 
-            String blockTypeName = block.getType().toString();
-            if (blocks.contains(blockTypeName)) {
-                player.sendMessage(ChatColor.RED + "This block is already banned!");
-                return;
-            }
+        event.setCancelled(true);
 
-            blocks.add(blockTypeName);
-            config.set("bannedBlocks", blocks);
+        Block block = event.getBlock();
+        FileConfiguration config = plugin.getConfig();
+        List<String> blocks = config.getStringList("bannedBlocks");
 
-            player.sendMessage(ChatColor.GREEN + "Added " + blockTypeName + " to the list of banned blocks.");
+        String blockTypeName = block.getType().toString();
+        if (blocks.contains(blockTypeName)) {
+            player.sendMessage(ChatColor.RED + "This block is already banned!");
+            return;
         }
+
+        blocks.add(blockTypeName);
+        config.set("bannedBlocks", blocks);
+
+        player.sendMessage(ChatColor.GREEN + "Added " + blockTypeName + " to the list of banned blocks.");
     }
 
     @EventHandler

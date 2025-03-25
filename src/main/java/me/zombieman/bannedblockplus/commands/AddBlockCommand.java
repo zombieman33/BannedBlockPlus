@@ -31,19 +31,22 @@ public class AddBlockCommand implements CommandExecutor, TabCompleter {
         }
         Player p = (Player) sender;
 
-        if (p.hasPermission("bannedblockplus.command.addblock")) {
-            SaveBlockData saveBlockData = new SaveBlockData(plugin);
-            if (args.length >= 1) {
-                String blockName = args[0].toUpperCase();
-                ItemStack block = new ItemStack(Material.valueOf(blockName.toUpperCase()));
-                saveBlockData.saveBlockData(block, p);
-            } else {
-                ItemStack heldItem = p.getInventory().getItemInMainHand();
-                saveBlockData.saveBlockData(heldItem, p);
-            }
-        } else {
+        if (!p.hasPermission("bannedblockplus.command.addblock")) {
             HelpMessages.noPermission(p);
+            return false;
         }
+
+        SaveBlockData saveBlockData = new SaveBlockData(plugin);
+
+        if (args.length >= 1) {
+            String blockName = args[0].toUpperCase();
+            ItemStack block = new ItemStack(Material.valueOf(blockName.toUpperCase()));
+            saveBlockData.saveBlockData(block, p);
+        } else {
+            ItemStack heldItem = p.getInventory().getItemInMainHand();
+            saveBlockData.saveBlockData(heldItem, p);
+        }
+
         return false;
     }
     @Override

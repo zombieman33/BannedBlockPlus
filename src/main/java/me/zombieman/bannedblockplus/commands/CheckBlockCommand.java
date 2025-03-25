@@ -35,24 +35,28 @@ public class CheckBlockCommand implements CommandExecutor, TabCompleter {
         }
         Player p = (Player) sender;
 
-        if (p.hasPermission("bannedblockplus.command.checkblock")) {
-            ItemStack heldItem = p.getInventory().getItemInMainHand();
-            SaveBlockData saveBlockData = new SaveBlockData(plugin);
-            if (args.length >= 1) {
-                String itemName = args[0].toUpperCase();
-                ItemStack itemStack = new ItemStack(Material.valueOf(itemName.toUpperCase()));
-                saveBlockData.checkBlockData(itemStack, p);
-            } else {
-                if (heldItem.getType().isBlock()) {
-                    saveBlockData.checkBlockData(heldItem, p);
-                } else {
-                    p.sendMessage(ColorUtils.color("&6/checkblock"));
-                }
-            }
-        } else {
+        if (!p.hasPermission("bannedblockplus.command.checkblock")) {
             HelpMessages.noPermission(p);
+            return false;
         }
-        return false;
+
+        ItemStack heldItem = p.getInventory().getItemInMainHand();
+        SaveBlockData saveBlockData = new SaveBlockData(plugin);
+
+        if (args.length >= 1) {
+            String itemName = args[0].toUpperCase();
+            ItemStack itemStack = new ItemStack(Material.valueOf(itemName.toUpperCase()));
+            saveBlockData.checkBlockData(itemStack, p);
+            return true;
+        }
+
+        if (!heldItem.getType().isBlock()) {
+            p.sendMessage(ColorUtils.color("&6/checkblock"));
+            return false;
+        }
+
+        saveBlockData.checkBlockData(heldItem, p);
+        return true;
     }
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {

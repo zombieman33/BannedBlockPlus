@@ -19,9 +19,9 @@ public class PlayerDataManager {
 
     public static void initDataFolder(BannedBlockPlus plugin) {
         File playerDataFolder = new File(plugin.getDataFolder(), PlayerDataManager.DATA_FOLDER_NAME);
-        if (!playerDataFolder.exists()) {
-            playerDataFolder.mkdirs();
-        }
+        if (playerDataFolder.exists()) return;
+
+        playerDataFolder.mkdirs();
     }
 
     public static FileConfiguration getPlayerDataConfig(BannedBlockPlus plugin, Player player) {

@@ -32,12 +32,13 @@ public class ToggleAddBlockCommand implements CommandExecutor {
 
         Player p = (Player) sender;
 
-        if (p.hasPermission("bannedblockplus.command.toggleaddbannedblock")) {
-            PlayerData playerData = new PlayerData(plugin);
-            playerData.saveToggleAddBannedBlocks(p);
-        } else {
+        if (!p.hasPermission("bannedblockplus.command.toggleaddbannedblock")) {
             HelpMessages.noPermission(p);
+            return false;
         }
-        return false;
+
+        PlayerData playerData = new PlayerData(plugin);
+        playerData.saveToggleAddBannedBlocks(p);
+        return true;
     }
 }

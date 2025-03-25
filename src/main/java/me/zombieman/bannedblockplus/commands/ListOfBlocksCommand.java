@@ -14,6 +14,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.checkerframework.checker.units.qual.C;
 
+import javax.swing.text.html.MinimalHTMLWriter;
+import java.awt.*;
 import java.util.List;
 
 public class ListOfBlocksCommand implements CommandExecutor {
@@ -30,27 +32,29 @@ public class ListOfBlocksCommand implements CommandExecutor {
         }
         Player p = (Player) sender;
 
-        if (p.hasPermission("bannedblockplus.command.list")) {
-            List<String> blocks = plugin.getConfig().getStringList("bannedBlocks");
-            if (!blocks.isEmpty()) {
-                p.sendMessage(ColorUtils.color("&aBanned Block Plus > Block List"));
-                p.sendMessage(" ");
-                String blockList = String.join(", ", blocks);
-                TextComponent isnotinlist = new TextComponent(ColorUtils.color("&a" + blockList));
-                isnotinlist.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/listblocks " + blockList));
-                isnotinlist.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
-                        new ComponentBuilder("Click To Check: " + blockList).color(net.md_5.bungee.api.ChatColor.GRAY).italic(true).create()));
-                p.spigot().sendMessage(isnotinlist);
-                p.sendMessage();
-                p.sendMessage(" ");
-                int amountOfBlocks = blocks.size();
-                p.sendMessage(ChatColor.GREEN + "%d Banned Blocks".formatted(amountOfBlocks));
-            } else {
-                p.sendMessage(ColorUtils.color("&cThere isn't any banned blocks in this list."));
-            }
-        } else {
+        if (!p.hasPermission("bannedblockplus.command.list")) {
             HelpMessages.noPermission(p);
+            return false;
         }
+        List<String> blocks = plugin.getConfig().getStringList("bannedBlocks");
+        if (blocks.isEmpty()) {
+            p.sendMessage(ColorUtils.color("&cThere isn't any banned blocks in this list."));
+            return false;
+        }
+
+        p.sendMessage(ColorUtils.color("&aBanned Block Plus > Block List"));
+        p.sendMessage(" ");
+        String blockList = String.join(", ", blocks);
+        TextComponent isnotinlist = new TextComponent(ColorUtils.color("&a" + blockList));
+        isnotinlist.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/listblocks " + blockList));
+        isnotinlist.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
+                new ComponentBuilder("Click To Check: " + blockList).color(net.md_5.bungee.api.ChatColor.GRAY).italic(true).create()));
+        p.spigot().sendMessage(isnotinlist);
+
+        p.sendMessage();
+        p.sendMessage(" ");
+        int amountOfBlocks = blocks.size();
+        p.sendMessage(ChatColor.GREEN + "%d Banned Blocks".formatted(amountOfBlocks));
         return false;
     }
 }

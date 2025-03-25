@@ -15,7 +15,9 @@ public class RegionManager {
 
         for (String regionName : plugin.getConfig().getStringList("ignoredRegions")) {
             ProtectedRegion region = regionManager.getRegion(regionName);
+
             if (region == null) return false;
+
             return region.contains(location.getBlockX(), location.getBlockY(), location.getBlockZ());
         }
 

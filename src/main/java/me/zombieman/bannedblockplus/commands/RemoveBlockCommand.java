@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 
 public class RemoveBlockCommand implements CommandExecutor, TabCompleter {
     private final BannedBlockPlus plugin;
+
     public RemoveBlockCommand(BannedBlockPlus plugin) {
         this.plugin = plugin;
     }
@@ -35,20 +36,22 @@ public class RemoveBlockCommand implements CommandExecutor, TabCompleter {
         }
         Player p = (Player) sender;
 
-        if (p.hasPermission("bannedblockplus.command.removeblock")) {
-            SaveBlockData saveBlockData = new SaveBlockData(plugin);
-            if (args.length >= 1) {
-                String blockName = args[0].toUpperCase();
-                ItemStack block = new ItemStack(Material.valueOf(blockName.toUpperCase()));
-                saveBlockData.removeBlockData(block, p);
-            } else {
-                ItemStack heldItem = p.getInventory().getItemInMainHand();
-                saveBlockData.removeBlockData(heldItem, p);
-            }
-        } else {
+        if (!p.hasPermission("bannedblockplus.command.removeblock")) {
             HelpMessages.noPermission(p);
+            return false;
         }
-        return false;
+
+        SaveBlockData saveBlockData = new SaveBlockData(plugin);
+        if (args.length >= 1) {
+            String blockName = args[0].toUpperCase();
+            ItemStack block = new ItemStack(Material.valueOf(blockName.toUpperCase()));
+            saveBlockData.removeBlockData(block, p);
+            return true;
+        }
+
+        ItemStack heldItem = p.getInventory().getItemInMainHand();
+        saveBlockData.removeBlockData(heldItem, p);
+        return true;
     }
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
